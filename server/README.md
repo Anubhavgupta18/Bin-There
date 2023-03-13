@@ -1,5 +1,0 @@
-# Bin There
-
-## Problem Statement
-
--  

@@ -1,0 +1,27 @@
+{
+  "name": "bin-there",
+  "version": "1.0.0",
+  "description": "this is sevrer-code for bin there project",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start":"nodemon src/index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Anubhavgupta18/Bin-There.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Anubhavgupta18/Bin-There/issues"
+  },
+  "homepage": "https://github.com/Anubhavgupta18/Bin-There#readme",
+  "dependencies": {
+    "body-parser": "^1.20.2",
+    "dotenv": "^16.0.3",
+    "express": "^4.18.2",
+    "mongoose": "^7.0.1",
+    "nodemon": "^2.0.21"
+  }
+}

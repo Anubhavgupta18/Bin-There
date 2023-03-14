@@ -2,20 +2,27 @@ const User = require('../models/user-model');
 const sender = require('../configs/nodemailerConfig');
 const { EMAIL } = require('../configs/serverConfig');
 
-var otp,email,password,name;
+// var otp, email, password, name;
 
 const createUser = async (req, res) => {
     try {
-        email = req.body.email;
-        password = req.body.password;
-        name = req.body.name;
-        otp = Math.floor(100000 + Math.random() * 900000);
+        const { email, name, password } = req.body;
+        const otp = Math.floor(100000 + Math.random() * 900000);
+
+        const user = new User({
+            email,
+            password,
+            name,
+            otp
+        });
+
+        await user.save();
 
         var mailOptions = {
             from: EMAIL,
             to: req.body.email,
             subject: "Verification",
-            text: `Your ONE TIME PASSWORD(OTP) fro successfull signin is ${otp}`,
+            text: `Your ONE TIME PASSWORD(OTP) for successfull signin is ${otp}`,
         };
 
         sender.sendMail(mailOptions, function (error, info) {
@@ -26,7 +33,7 @@ const createUser = async (req, res) => {
             }
         });
 
-        return res.status(201).json({ message: 'OTP sent to your email'});
+        return res.status(201).json({ message: 'OTP sent to your email' });
     } catch (error) {
         return res.status(500).json({
             message: 'Error while creating user',
@@ -37,25 +44,28 @@ const createUser = async (req, res) => {
 
 const signin = async (req, res) => {
     try {
-        if (!req.body.email || !req.body.password) {
+        const { email, password } = req.body;
+        if (!email || !password) {
             return res.status(400).json({
                 message: 'Please fill all the fields'
             });
         }
-        const user = await User.findOne({ email: req.body.email });
+        const user = await User.findOne({ email });
         if (!user) {
             return res.status(400).json({
                 message: 'Invalid email or password'
             });
         }
 
-        const isPasswordValid = user.comparePassword(req.body.password);
+        const isPasswordValid = user.comparePassword(password);
         if (!isPasswordValid) {
             return res.status(400).json({
                 message: 'Invalid email or password'
             });
         }
-
+        if (!user.isVerified) {
+            return res.status(401).json({ message: 'Email not verified' });
+        }
         const token = await user.generateToken();
         return res.status(200).json({
             message: 'Login successful',
@@ -70,23 +80,28 @@ const signin = async (req, res) => {
     }
 };
 
-const verifyOtp = async (req, res) => {    
+const verifyOtp = async (req, res) => {
     try {
-        if (!req.body.otp) {
+        const { email, otp } = req.body;
+        if (!otp) {
             return res.status(400).json({
                 message: 'Please fill all the fields'
             });
         }
 
-        if (req.body.otp == otp) {
-            const user = await User.create({
-                email,
-                password,
-                name
-            });
-            user = { ...-password };
+        const user = await User.findOne({ email });
+        if (!user) {
+            return res.status(404).json({ message: 'User not found' });
+        }
+
+        if (otp == user.otp) {
+            user.isVerified = true;
+            user.otp = null;
+            await user.save();
+            const token = await user.generateToken();
             return res.status(200).json({
-                user,
+                name: user.name,
+                token,
                 message: 'OTP verified and successfully signed up'
             });
         }

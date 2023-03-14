@@ -23,6 +23,14 @@ const userSchema = new mongoose.Schema({
         required: true,
         enum: ['admin', 'user','agent'],
         default: 'user'
+    },
+    otp: {
+        type: String,
+        default: null
+    },
+    isVerified: {
+        type: Boolean,
+        default: false
     }
 }, { timestamps: true });
 
@@ -36,7 +44,7 @@ userSchema.pre('save', function (next) {
 
 userSchema.methods.comparePassword = function (plainPassword) {
     const user = this;
-    return bcrypt.compareSync(plainPassword, user.password);
+    return bcrypt.compare(plainPassword, user.password);
 };
 
 userSchema.methods.generateToken = function () {

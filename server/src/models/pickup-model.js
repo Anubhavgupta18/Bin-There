@@ -6,18 +6,11 @@ const pickupSchema = new mongoose.Schema({
         ref: 'User',
         required: true
     },
-    address: {
-        flatNo: String,
-        city: String,
-        state: String,
-        pincode: String,
-        street: String
-    },
-    pickupStartTime: {
+    startTime: {
         type: Date,
         required: true,
     },
-    pickupEndTime: {
+    endTime: {
         type: Date,
         required: true,
     },
@@ -25,15 +18,10 @@ const pickupSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Agent',
     },
-    isCompleted: {
-        user: {
-            type: Boolean,
-            default: false
-        },
-        agent: {
-            type: Boolean,
-            default: false
-        }
+    status: {
+        type: String,
+        enum: ['pending', 'approved', 'rejected'],
+        default: 'pending'
     }
 }, { timestamps: true });
 

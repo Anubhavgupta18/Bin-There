@@ -18,11 +18,12 @@ const userSchema = new mongoose.Schema({
         required: true,
         maxlength: 20
     },
-    role: {
-        type: String,
-        required: true,
-        enum: ['admin', 'user','agent'],
-        default: 'user'
+    address: {
+        flatNo: String,
+        city: String,
+        state: String,
+        pincode: String,
+        street: String
     },
     otp: {
         type: String,

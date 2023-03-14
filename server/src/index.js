@@ -3,6 +3,7 @@ const { connect } = require('./configs/dbConfig');
 const { PORT } = require('./configs/serverConfig');
 const userRoutes = require('./routes/user-routes');
 const pickupRoutes = require('./routes/pickup-routes');
+const agentRoutes = require('./routes/agent-routes');
 const bodyParser = require('body-parser');
 const passport = require('passport');
 const { passportAuth } = require('./configs/jwt-config');
@@ -22,4 +23,5 @@ app.listen(PORT, async () => {
 });
 
 app.use('/api/users', userRoutes);
+app.use('/api/agents', agentRoutes);
 app.use('/api/pickups', pickupRoutes);

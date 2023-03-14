@@ -1,24 +1,39 @@
-const User = require('../models/user-model');
+const Agent = require('../models/agent-model');
 const sender = require('../configs/nodemailerConfig');
 const { EMAIL } = require('../configs/serverConfig');
 
 
-const createUser = async (req, res) => {
+const createAgent = async (req, res) => {
     try {
-        const { email, name, password,flatNo,street,city,state,pincode } = req.body;
+        if (!req.body.email.includes('@')) {
+            return res.status(400).json({
+                message: 'Please enter a valid email'
+            });
+        }
+        if (!req.body.email || !req.body.password || !req.body.name) {
+            return res.status(400).json({
+                message: 'Please fill all the fields'
+            });
+        }
+        const agentExists = await Agent.findOne({ email:req.body.email });
+        if (agentExists) {
+           return res.status(400).json({ error: "Agent+ with this email already exists" });
+        }
+        const { email, name, password,flatNo,street,city,pincode,state,mobileNo } = req.body;
         const otp = Math.floor(100000 + Math.random() * 900000);
 
-        const user = new User({
+        const agent = new Agent({
             email,
             password,
             name,
             otp,
+            mobileNo,
             address: {
                 flatNo, street, city, state, pincode
             }
         });
 
-        await user.save();
+        await agent.save();
 
         var mailOptions = {
             from: EMAIL,
@@ -52,27 +67,27 @@ const signin = async (req, res) => {
                 message: 'Please fill all the fields'
             });
         }
-        const user = await User.findOne({ email });
-        if (!user) {
+        const agent = await Agent.findOne({ email });
+        if (!agent) {
             return res.status(400).json({
                 message: 'Invalid email or password'
             });
         }
 
-        const isPasswordValid = user.comparePassword(password);
+        const isPasswordValid = agent.comparePassword(password);
         if (!isPasswordValid) {
             return res.status(400).json({
                 message: 'Invalid email or password'
             });
         }
-        if (!user.isVerified) {
+        if (!agent.isVerified) {
             return res.status(401).json({ message: 'Email not verified' });
         }
-        const token = await user.generateToken();
+        const token = await agent.generateToken();
         return res.status(200).json({
             message: 'Login successful',
             token,
-            name: user.name
+            name: agent.name
         });
     } catch (error) {
         return res.status(500).json({
@@ -91,18 +106,18 @@ const verifyOtp = async (req, res) => {
             });
         }
 
-        const user = await User.findOne({ email });
-        if (!user) {
+        const agent = await Agent.findOne({ email });
+        if (!agent) {
             return res.status(404).json({ message: 'User not found' });
         }
 
-        if (otp == user.otp) {
-            user.isVerified = true;
-            user.otp = null;
-            await user.save();
-            const token = await user.generateToken();
+        if (otp == agent.otp) {
+            agent.isVerified = true;
+            agent.otp = null;
+            await agent.save();
+            const token = await agent.generateToken();
             return res.status(200).json({
-                name: user.name,
+                name: agent.name,
                 token,
                 message: 'OTP verified and successfully signed up'
             });
@@ -122,7 +137,7 @@ const verifyOtp = async (req, res) => {
 
 
 module.exports = {
-    createUser,
+    createAgent,
     signin,
     verifyOtp
 }

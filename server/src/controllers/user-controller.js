@@ -2,7 +2,6 @@ const User = require('../models/user-model');
 const sender = require('../configs/nodemailerConfig');
 const { EMAIL } = require('../configs/serverConfig');
 
-// var otp, email, password, name;
 
 const createUser = async (req, res) => {
     try {

@@ -6,9 +6,12 @@ const pickupSchema = new mongoose.Schema({
         ref: 'User',
         required: true
     },
-    pickupAddress: {
-        type: String,
-        required: true
+    address: {
+        flatNo: String,
+        city: String,
+        state: String,
+        pincode: String,
+        street: String
     },
     pickupStartTime: {
         type: Date,
@@ -20,12 +23,17 @@ const pickupSchema = new mongoose.Schema({
     },
     agent: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'User',
-        //required: true
+        ref: 'Agent',
     },
     isCompleted: {
-        type: Boolean,
-        default: false
+        user: {
+            type: Boolean,
+            default: false
+        },
+        agent: {
+            type: Boolean,
+            default: false
+        }
     }
 }, { timestamps: true });
 

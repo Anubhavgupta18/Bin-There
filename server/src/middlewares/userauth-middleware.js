@@ -1,3 +1,4 @@
+const User = require('../models/user-model');
 const validateUser = async (req, res, next) => {
     if (!req.body.email.includes('@')) {
         return res.status(400).json({
@@ -8,6 +9,10 @@ const validateUser = async (req, res, next) => {
         return res.status(400).json({
             message: 'Please fill all the fields'
         });
+    }
+    const userExists = await User.findOne({ email:req.body.email });
+    if (userExists) {
+       return res.status(400).json({ error: "User with this email already exists" });
     }
     next();
 }

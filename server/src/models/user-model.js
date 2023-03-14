@@ -21,7 +21,7 @@ const userSchema = new mongoose.Schema({
     role: {
         type: String,
         required: true,
-        enum: ['admin', 'user'],
+        enum: ['admin', 'user','agent'],
         default: 'user'
     }
 });
@@ -41,7 +41,7 @@ userSchema.methods.comparePassword = function (plainPassword) {
 
 userSchema.methods.generateToken = function () {
     const user = this;
-    const token = jwt.sign({ id: user._id, email: user.email }, JWT_SECRETKEY, { expiresIn: '1d' });
+    const token = jwt.sign({ id: user._id, email: user.email }, JWT_SECRETKEY);
     return token;
 }
 const User = mongoose.model('User', userSchema);

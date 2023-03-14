@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 
 const pickupSchema = new mongoose.Schema({
-    username: {
+    user: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User',
         required: true
@@ -10,21 +10,20 @@ const pickupSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    pickupDate: {
+    pickupStartTime: {
         type: Date,
-        required: true
+        required: true,
     },
-    pickupTime: {
-        type: String,
-        required: true
+    pickupEndTime: {
+        type: Date,
+        required: true,
     },
-    agentName: {
+    agent: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User',
-        required: true
         //required: true
     }
-});
+}, { timestamps: true });
 
 const Pickup = mongoose.model('Pickup', pickupSchema);
 

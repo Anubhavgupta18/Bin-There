@@ -83,6 +83,7 @@ const verifyOtp = async (req, res) => {
                 password,
                 name
             });
+            user = { ...-password };
             return res.status(200).json({
                 user,
                 message: 'OTP verified and successfully signed up'

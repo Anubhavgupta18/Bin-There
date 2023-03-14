@@ -1,4 +1,5 @@
 const User = require('../models/user-model');
+const passport = require('passport');
 const validateUser = async (req, res, next) => {
     if (!req.body.email.includes('@')) {
         return res.status(400).json({

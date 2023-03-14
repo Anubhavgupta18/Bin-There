@@ -24,7 +24,7 @@ const userSchema = new mongoose.Schema({
         enum: ['admin', 'user','agent'],
         default: 'user'
     }
-});
+}, { timestamps: true });
 
 userSchema.pre('save', function (next) {
     const user = this;

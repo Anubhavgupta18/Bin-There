@@ -25,7 +25,18 @@ const authenticateUser = async (req, res, next) => {
     })(req, res, next);
 }
 
+const checkAdmin = async (req, res, next) => {
+    if (req.user.role !== 'admin') {
+        return res.status(401).json({
+            message: 'Unauthorised access'
+        })
+    }
+    next();
+}
+
+
 module.exports = {
     validateUser,
-    authenticateUser
+    authenticateUser,
+    checkAdmin
 }

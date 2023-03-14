@@ -22,8 +22,18 @@ const pickupSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User',
         //required: true
+    },
+    isCompleted: {
+        type: Boolean,
+        default: false
     }
 }, { timestamps: true });
+
+// pickupSchema.post('save', async function (doc, next) {
+//     try {
+//         const agents = await User.find({ role: 'agent' });
+//         agents.forEach(async (agent) => {
+
 
 const Pickup = mongoose.model('Pickup', pickupSchema);
 

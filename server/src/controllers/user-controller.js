@@ -59,7 +59,8 @@ const signin = async (req, res) => {
         const token = await user.generateToken();
         return res.status(200).json({
             message: 'Login successful',
-            token
+            token,
+            name: user.name
         });
     } catch (error) {
         return res.status(500).json({

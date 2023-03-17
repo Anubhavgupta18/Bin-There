@@ -23,7 +23,7 @@
 
 ### Routes
 
-#### Register Users
+- Register Users
    
 **Route:** `/users/signup`
 
@@ -43,7 +43,7 @@ successfull or not
 
 ---
 
-#### Verify user email
+- Verify user email
 
 **Route:** `/users/verifyotp`
 
@@ -62,7 +62,7 @@ verified or not if verified then the user is created
 
 ---
 
-#### Login User
+- Login User
 
 **Route:** `/users/signin`
 
@@ -81,7 +81,7 @@ user data with token
 
 ---
 
-#### updating the fields of a user like address
+- updating the fields of a user like address
 
 **Route:** `/users/update`
 
@@ -108,7 +108,7 @@ updated users data
 
 ---
 
-#### Getting the details of the user
+- Getting the details of the user
 
 **Route:** `/users/user`
 

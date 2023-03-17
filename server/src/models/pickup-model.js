@@ -6,13 +6,17 @@ const pickupSchema = new mongoose.Schema({
         ref: 'User',
         required: true
     },
-    startTime: {
-        type: Date,
-        required: true,
-    },
-    endTime: {
-        type: Date,
-        required: true,
+    // startTime: {
+    //     type: Date,
+    //     required: true,
+    // },
+    // endTime: {
+    //     type: Date,
+    //     required: true,
+    // },
+    timeslot: {
+        type: String,
+        required: true
     },
     agent: {
         type: mongoose.Schema.Types.ObjectId,

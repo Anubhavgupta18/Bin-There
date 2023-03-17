@@ -1,6 +1,7 @@
 const Agent = require('../models/agent-model');
 const sender = require('../configs/nodemailerConfig');
 const { EMAIL } = require('../configs/serverConfig');
+const User = require('../models/user-model');
 
 
 const createAgent = async (req, res) => {
@@ -19,7 +20,7 @@ const createAgent = async (req, res) => {
         if (agentExists) {
            return res.status(400).json({ error: "Agent+ with this email already exists" });
         }
-        const { email, name, password,flatNo,street,city,pincode,state,mobileNo } = req.body;
+        const { email, name, password,flatNo,street,city,pincode,state,mobileNo, pickupPoints, timeslots } = req.body;
         const otp = Math.floor(100000 + Math.random() * 900000);
 
         const agent = new Agent({
@@ -30,7 +31,9 @@ const createAgent = async (req, res) => {
             mobileNo,
             address: {
                 flatNo, street, city, state, pincode
-            }
+            },
+            pickupPoints,
+            timeslots
         });
 
         await agent.save();
@@ -135,9 +138,32 @@ const verifyOtp = async (req, res) => {
     }
 };
 
+const getTimeSlots = async (req, res) => {
+    try {
+        const userId = req.user._id;
+        const user = await User.findById(userId);
+        console.log(user);
+        const agent = await Agent.findOne({ pickupPoints: user.address.pincode });
+        console.log(agent);
+        if (!agent) {
+            return res.status(404).json({ message: 'Currently No service is available in this area. Please stay tuned' });
+        }
+        // const timeSlots = agent.timeslots;
+        // console.log(timeSlots)
+        return res.status(200).json(agent);
+    } catch (error) {
+        return res.status(500).json({
+            message: 'Error while getting time slots',
+            error: error
+
+        });
+    }
+};
+
 
 module.exports = {
     createAgent,
     signin,
-    verifyOtp
+    verifyOtp,
+    getTimeSlots
 }

@@ -37,10 +37,13 @@ const agentSchema = new mongoose.Schema({
         default: false
     },
     pickupPoints: {
+        type: String, // taking only one pickup point(pincode) for now
+        required: true
+    },
+    timeslots: {
         type: [String],
         default: [],
     }
-
 }, { timestamps: true });
 
 agentSchema.pre('save', async function (next) {

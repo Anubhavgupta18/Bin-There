@@ -41,6 +41,7 @@
 **Response:** 
 successfull or not
 
+---
 
 **Route:** `/users/verifyotp`
 
@@ -57,6 +58,7 @@ successfull or not
 **Response:** 
 verified or not if verified then the user is created
 
+---
 
 **Route:** `/users/signin`
 
@@ -73,6 +75,7 @@ verified or not if verified then the user is created
 **Response:** 
 user data with token
 
+---
 
 **Route:** `/users/update`
 
@@ -97,6 +100,7 @@ any field to update
 **Response:** 
 updated users data
 
+---
 
 **Route:** `/users/user`
 
@@ -105,6 +109,7 @@ updated users data
 **Response:** 
 user data
 
+---
 
 **Route:** `/users/timeslots`
 

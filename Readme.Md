@@ -40,3 +40,75 @@
 
 **Response:** 
 successfull or not
+
+
+**Route:** `/users/verifyotp`
+
+**Method:** `POST`
+
+**Body:** 
+```json
+{
+    "email":"user@gmail.com",
+    "otp":"280270"
+}
+```
+
+**Response:** 
+verified or not if verified then the user is created
+
+
+**Route:** `/users/signin`
+
+**Method:** `POST`
+
+**Body:** 
+```json
+{
+    "email":"user@gmail.com",
+    "password":"password",
+}
+```
+
+**Response:** 
+user data with token
+
+
+**Route:** `/users/update`
+
+**Method:** `PATCH`
+
+**Body:** 
+any field to update
+```json
+{
+    "address":{
+        "city":"Ranchi",
+        "state":"Jharkhand",
+        "pincode":"834004",
+        "flatNo":"21",
+        "street":"Road",
+        "lat":"83.2",
+        "lon":"84.2"
+    }
+}
+```
+
+**Response:** 
+updated users data
+
+
+**Route:** `/users/user`
+
+**Method:** `GET`
+
+**Response:** 
+user data
+
+
+**Route:** `/users/timeslots`
+
+**Method:** `GET`
+
+**Response:** 
+agent data

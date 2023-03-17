@@ -3,7 +3,7 @@
 ## Users API
 
 ### Users Model
-- schema:
+- schema example:
  ```json
 {
   "name": "username",
@@ -21,5 +21,22 @@
 }
 ```
 
+### Routes
 
+#### Register Users
    
+**Route:** `/users/signup`
+
+**Method:** `POST`
+
+**Body:** 
+```json
+{
+    "email":"user@gmail.com",
+    "password":"password",
+    "name":"username"
+}
+```
+
+**Response:** 
+successfull or not

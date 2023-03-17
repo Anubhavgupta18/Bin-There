@@ -105,9 +105,8 @@ exports.deleteReport = async (req, res) => {
         if (!report) {
             return res.status(404).json({ error: 'Report not found' });
         }
-
         await cloudinary.uploader.destroy(report.image.public_id);
-        
+
         res.json({ message: 'Report deleted successfully' });
     } catch (error) {
         console.error(error);

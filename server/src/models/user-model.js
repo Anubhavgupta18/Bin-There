@@ -23,7 +23,9 @@ const userSchema = new mongoose.Schema({
         city: String,
         state: String,
         pincode: String,
-        street: String
+        street: String,
+        lat: String,
+        lon: String
     },
     otp: {
         type: String,
@@ -37,7 +39,7 @@ const userSchema = new mongoose.Schema({
 
 userSchema.pre('save', function (next) {
     const user = this;
-    const SALT=bcrypt.genSaltSync(10);
+    const SALT = bcrypt.genSaltSync(10);
     const encryptedPassword = bcrypt.hashSync(user.password, SALT);
     user.password = encryptedPassword;
     next();

@@ -16,11 +16,11 @@ const createAgent = async (req, res) => {
                 message: 'Please fill all the fields'
             });
         }
-        const agentExists = await Agent.findOne({ email:req.body.email });
+        const agentExists = await Agent.findOne({ email: req.body.email });
         if (agentExists) {
-           return res.status(400).json({ error: "Agent+ with this email already exists" });
+            return res.status(400).json({ error: "Agent+ with this email already exists" });
         }
-        const { email, name, password,flatNo,street,city,pincode,state,mobileNo, pickupPoints, timeslots } = req.body;
+        const { email, name, password, flatNo, street, city, pincode, state, mobileNo, pickupPoints, timeslots } = req.body;
         const otp = Math.floor(100000 + Math.random() * 900000);
 
         const agent = new Agent({
@@ -87,10 +87,11 @@ const signin = async (req, res) => {
             return res.status(401).json({ message: 'Email not verified' });
         }
         const token = await agent.generateToken();
+        agent.password = undefined;
         return res.status(200).json({
             message: 'Login successful',
             token,
-            name: agent.name
+            agent
         });
     } catch (error) {
         return res.status(500).json({
@@ -119,8 +120,9 @@ const verifyOtp = async (req, res) => {
             agent.otp = null;
             await agent.save();
             const token = await agent.generateToken();
+            agent.password = undefined;
             return res.status(200).json({
-                name: agent.name,
+                agent,
                 token,
                 message: 'OTP verified and successfully signed up'
             });
@@ -138,32 +140,27 @@ const verifyOtp = async (req, res) => {
     }
 };
 
-const getTimeSlots = async (req, res) => {
-    try {
-        const userId = req.user._id;
-        const user = await User.findById(userId);
-        console.log(user);
-        const agent = await Agent.findOne({ pickupPoints: user.address.pincode });
-        console.log(agent);
-        if (!agent) {
-            return res.status(404).json({ message: 'Currently No service is available in this area. Please stay tuned' });
-        }
-        // const timeSlots = agent.timeslots;
-        // console.log(timeSlots)
-        return res.status(200).json(agent);
-    } catch (error) {
-        return res.status(500).json({
-            message: 'Error while getting time slots',
-            error: error
+const updateDetails = async (req, res) => {
+    const { id } = req.params;
 
-        });
+    try {
+        const updatedUser = await Agent.findByIdAndUpdate(id, req.body, { new: true });
+
+        if (!updatedUser) {
+            return res.status(404).json({ error: 'User not found' });
+        }
+
+        return res.json(updatedUser);
+    } catch (error) {
+        console.error(error);
+        return res.status(500).json({ error: 'Internal server error' });
     }
-};
+}
 
 
 module.exports = {
     createAgent,
     signin,
     verifyOtp,
-    getTimeSlots
+    updateDetails
 }

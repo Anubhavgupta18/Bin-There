@@ -23,27 +23,28 @@ const agentSchema = new mongoose.Schema({
     },
     mobileNo: {
         type: String,
-        required: true
     },
     address: {
         flatNo: String,
         city: String,
         state: String,
         pincode: String,
-        street: String
+        street: String,
+        lat: String,
+        lon: String
     },
     isVerified: {
         type: Boolean,
         default: false
     },
     pickupPoints: {
-        type: String, // taking only one pickup point(pincode) for now
-        required: true
+        type: String,
     },
-    timeslots: {
-        type: [String],
-        default: [],
-    }
+    timeslots: [
+        {
+            type: String
+        }
+    ]
 }, { timestamps: true });
 
 agentSchema.pre('save', async function (next) {

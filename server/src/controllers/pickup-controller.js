@@ -22,15 +22,12 @@ const createPickup = async (req, res) => {
 const updatePickup = async (req, res) => {
     try {
         const { id } = req.params;
-        const { status } = req.body;
-        const pickup = await Pickup.findById(id);
+        const pickup = await Pickup.findByIdAndUpdate(id, req.body, { new: true });
         if (!pickup) {
             return res.status(404).json({
                 message: 'Pickup not found'
             });
         }
-        pickup.status = status;
-        await pickup.save();
         return res.status(200).json({ pickup });
     } catch (error) {
         return res.status(500).json({

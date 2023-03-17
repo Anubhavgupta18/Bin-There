@@ -6,14 +6,6 @@ const pickupSchema = new mongoose.Schema({
         ref: 'User',
         required: true
     },
-    // startTime: {
-    //     type: Date,
-    //     required: true,
-    // },
-    // endTime: {
-    //     type: Date,
-    //     required: true,
-    // },
     timeslot: {
         type: String,
         required: true
@@ -28,11 +20,6 @@ const pickupSchema = new mongoose.Schema({
         default: 'pending'
     }
 }, { timestamps: true });
-
-// pickupSchema.post('save', async function (doc, next) {
-//     try {
-//         const agents = await User.find({ role: 'agent' });
-//         agents.forEach(async (agent) => {
 
 
 const Pickup = mongoose.model('Pickup', pickupSchema);

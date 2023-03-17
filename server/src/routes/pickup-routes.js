@@ -6,7 +6,7 @@ const express = require('express');
 const router = express.Router();
 
 router.post('/', authenticateUser, createPickup);
-router.patch('/status/:id', authenticateUser, updatePickup);
+router.patch('/update/:id', authenticateUser, updatePickup);
 
 
 module.exports = router;

@@ -23,7 +23,7 @@
 
 ### Routes
 
-- Register Users
+**Desc:** Register Users
    
 **Route:** `/users/signup`
 
@@ -43,7 +43,7 @@ successfull or not
 
 ---
 
-- Verify user email
+**Desc:** Verify user email
 
 **Route:** `/users/verifyotp`
 
@@ -62,7 +62,7 @@ verified or not if verified then the user is created
 
 ---
 
-- Login User
+**Desc:** Login User
 
 **Route:** `/users/signin`
 
@@ -81,7 +81,7 @@ user data with token
 
 ---
 
-- updating the fields of a user like address
+**Desc:** updating the fields of a user like address
 
 **Route:** `/users/update`
 
@@ -108,7 +108,7 @@ updated users data
 
 ---
 
-- Getting the details of the user
+**Desc:** Getting the details of the user
 
 **Route:** `/users/user`
 
@@ -119,7 +119,7 @@ user data
 
 ---
 
-#### Getting timeslots for the specific user via pincode mapping
+**Desc:** Getting timeslots for the specific user via pincode mapping
 
 **Route:** `/users/timeslots`
 
@@ -155,7 +155,7 @@ agent data
 
 ### Routes
 
-#### Register Agents
+**Desc:** Register Agents
    
 **Route:** `/agents/signup`
 
@@ -175,7 +175,7 @@ successfull or not
 
 ---
 
-#### Verify email
+**Desc:** Verify email
 
 **Route:** `/agents/verifyotp`
 
@@ -194,7 +194,7 @@ verified or not if verified then the agent is created
 
 ---
 
-#### Login
+**Desc:** Login
 
 **Route:** `/agents/signin`
 
@@ -213,7 +213,7 @@ agent data with token
 
 ---
 
-#### updating the fields of Agents like address, pickup points, and others
+**Desc:** updating the fields of Agents like address, pickup points, and others
 
 **Route:** `/agents/update`
 
@@ -255,7 +255,7 @@ updated agent data
 
 ### Routes
 
-#### Create Pickup
+**Desc:** Create Pickup
    
 **Route:** `/pickups/`
 
@@ -287,7 +287,7 @@ updated agent data
 
 ---
 
-#### Update Pickup
+**Desc:** Update Pickup
 
 **Route:** `/pickups/update/pickupId`
 
@@ -316,3 +316,118 @@ updated agent data
     }
 }
 ```
+
+## Reports API
+
+### Reports Model
+- schema example:
+ ```json
+{
+    "user": "userRef",
+    "description": "test2",
+    "image": {
+        "url": "https://res.cloudinary.com/drwsrzau7/image/upload/v1679093070/jvmgnomadw7dv36nzpod.png",
+        "public_id": "jvmgnomadw7dv36nzpod"
+    },
+    "lat": "84.1",
+    "lon": "73.13",
+}
+```
+
+### Routes
+
+**Desc:** Create Report
+   
+**Route:** `/reports/`
+
+**Method:** `POST`
+
+**Body:** 
+```json
+{
+    "description":"test",
+    "lat":"83.2",
+    "lon":"37.2",
+    "image":"image file"
+}
+```
+
+**Response:** 
+```json
+{
+    "user": "6414c41d6868a24882d71744",
+    "description": "test2",
+    "image": {
+        "url": "https://res.cloudinary.com/drwsrzau7/image/upload/v1679093070/jvmgnomadw7dv36nzpod.png",
+        "public_id": "jvmgnomadw7dv36nzpod"
+    },
+    "lat": "84.1",
+    "lon": "73.13"
+}
+```
+
+---
+
+**Desc:** Get all reports
+
+**Route:** `/reports/`
+
+**Method:** `GET`
+
+**Response:** 
+array of all reports
+
+---
+
+**Desc:** Get Report by Report Id
+
+**Route:** `/reports/reportid`
+
+**Method:** `GET`
+
+**Response:** 
+get the report data
+
+---
+
+**Desc:** Get all reports of an user
+
+**Route:** `/reports/user/userid`
+
+**Method:** `GET`
+
+**Response:** 
+array of all reports of the user
+
+---
+
+**Desc:** Getting the details of the user
+
+**Route:** `/users/user`
+
+**Method:** `GET`
+
+**Response:** 
+user data
+
+---
+
+**Desc:** Update a Report except image
+
+**Route:** `/reports/reportid`
+
+**Method:** `PATCH`
+
+**Response:** 
+updated report
+
+---
+
+**Desc:** Delete a report
+
+**Route:** `/reports/reportid`
+
+**Method:** `DELETE`
+
+**Response:** 
+delete the report

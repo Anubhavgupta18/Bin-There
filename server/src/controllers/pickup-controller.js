@@ -3,11 +3,11 @@ const Pickup = require('../models/pickup-model');
 const createPickup = async (req, res) => {
     try {
         const user = req.user._id;
-        const { timeslot, agentId } = req.body;
+        const { timeslot, agent } = req.body;
         const pickup = new Pickup({
             user,
             timeslot,
-            agent: agentId
+            agent
         });
         await pickup.save();
         return res.status(201).json({ pickup });

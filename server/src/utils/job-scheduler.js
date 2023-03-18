@@ -9,7 +9,7 @@ const Agent = require('../models/agent-model');
  */
 
 const assignAgentReportJobs = async () => {
-    cron.schedule('*/2 * * * *', async () => {
+    cron.schedule('* * * * *', async () => {
         const reports = await Report.find();
         reports.forEach(async (report) => {
             if (!report.agent) {
@@ -19,7 +19,13 @@ const assignAgentReportJobs = async () => {
                         pincode: user.address.pincode,
                     }
                 });
-                report.agent = agent._id;
+
+                if (!agent._id) {
+                    console.log("No agent found");
+                }
+                else {
+                    report.agent = agent._id;
+                }
             }
         })
     })

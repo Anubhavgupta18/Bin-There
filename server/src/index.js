@@ -9,8 +9,10 @@ const bodyParser = require('body-parser');
 const passport = require('passport');
 const { passportAuth } = require('./configs/jwt-config');
 const cors = require("cors");
+const {assignAgentReportJobs} = require('./utils/job-scheduler');
+
 const options = {
-    origin: ["*", "http://localhost:3009", "https://bin-there-production.up.railway.app/"],
+    origin: ["*", "localhost:3009", "https://bin-there-production.up.railway.app/"],
     useSuccessStatus: 200,
 };
 const app = express();
@@ -26,6 +28,7 @@ app.listen(PORT, async () => {
     console.log(`Server is running on port ${PORT}`);
     await connect();
     console.log('Mongodb server connected');
+    assignAgentReportJobs();
 });
 
 app.use('/api/users', userRoutes);

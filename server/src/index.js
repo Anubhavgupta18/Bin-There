@@ -28,7 +28,7 @@ app.listen(PORT, async () => {
     console.log(`Server is running on port ${PORT}`);
     await connect();
     console.log('Mongodb server connected');
-    assignAgentReportJobs();
+    //assignAgentReportJobs();
 });
 
 app.use('/api/users', userRoutes);

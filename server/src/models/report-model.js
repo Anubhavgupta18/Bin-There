@@ -36,7 +36,7 @@ const reportSchema = new mongoose.Schema(
   }
 );
 
-reportSchema.post('save', function (next) {
+reportSchema.pre('save', function (next) {
   this.status = 'reported';
   next();
 });

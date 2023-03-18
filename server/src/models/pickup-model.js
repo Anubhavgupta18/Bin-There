@@ -21,7 +21,6 @@ const pickupSchema = new mongoose.Schema({
     }
 }, { timestamps: true });
 
-
 const Pickup = mongoose.model('Pickup', pickupSchema);
 
 module.exports = Pickup;

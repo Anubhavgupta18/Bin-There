@@ -1,7 +1,7 @@
-const aws = require("aws-sdk");
+const aws = require('aws-sdk');
 const multer = require("multer");
 const multerS3 = require("multer-s3");
-const { AWS_REGION,AWS_SECRET_ACCESS_KEY,AWS_ACCESS_KEY_ID,BUCKET_NAME } = require("./serverConfig.js");
+const { AWS_REGION,AWS_SECRET_ACCESS_KEY,AWS_ACCESS_KEY_ID,BUCKET_NAME } = require("./serverConfig");
 
 aws.config.update({
     region: AWS_REGION,
@@ -25,4 +25,6 @@ const upload = multer({
     })
 })
 
-export default upload;
+module.exports = {
+    upload
+}

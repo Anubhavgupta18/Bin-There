@@ -8,8 +8,13 @@ const reportRoutes = require('./routes/report-routes');
 const bodyParser = require('body-parser');
 const passport = require('passport');
 const { passportAuth } = require('./configs/jwt-config');
-
+const cors = require("cors");
+const options = {
+    origin: ["*", "http://localhost:3009", "https://bin-there-production.up.railway.app/"],
+    useSuccessStatus: 200,
+};
 const app = express();
+app.use(cors(options));
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));

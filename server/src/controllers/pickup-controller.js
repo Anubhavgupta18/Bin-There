@@ -37,7 +37,25 @@ const updatePickup = async (req, res) => {
     }
 };
 
+const findPickUpsByUserId = async (req, res) => {
+    const userId = req.user._id;
+
+    try {
+        const pickups = await Pickup.find({ user: userId });
+        if(!pickups){
+            return res.status(404).json({
+                message: 'No Pickups available'
+            })
+        }
+        res.status(201).json(pickups);
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: 'Internal server error' });
+    }
+};
+
 module.exports = {
     createPickup,
-    updatePickup
+    updatePickup,
+    findPickUpsByUserId
 };

@@ -75,9 +75,10 @@ class PickupController extends GetxController {
               body: jsonEncode({
                 'timeslot':
                     "${timeSlots?.value.timeslots[selectedTimeSlot.value]}",
-                'agentId': timeSlots?.value.id,
+                'agent': timeSlots?.value.id,
               }),
               headers: Constants().authHeader);
+      print(response.body);
       if (response.statusCode == 201) {
         Get.snackbar('Success', 'Pickup created successfully');
         await getAllPickups();
@@ -87,13 +88,18 @@ class PickupController extends GetxController {
     }
   }
 
-  updatePickupStatus() async {
+  updatePickupStatus(int index) async {
     try {
+      print(allPickups[index].id);
       var response = await http.patch(
           Uri.parse(
-              '${Constants.apiUrl}/api/pickups/update/${allPickups[selectedTimeSlot.value].id}'),
-          body: jsonEncode({'status': 'approved'}),
+              '${Constants.apiUrl}/api/pickups/update/${allPickups[index].id}'),
+          body: jsonEncode({
+            "statusByUser": true,
+            "statusByAgent": true //pass any of these given field to update
+          }),
           headers: Constants().authHeader);
+      print(response.body);
       if (response.statusCode == 200) {
         await getAllPickups();
         Get.snackbar('Success', 'You confirmed the pickup from your house');

@@ -372,7 +372,7 @@ class PickupService extends StatelessWidget {
                                     ),
                                     GestureDetector(
                                       onTap: () {
-                                        pickupController.updatePickupStatus();
+                                        pickupController.updatePickupStatus(index);
                                       },
                                       child: const Text(
                                         'Approve Pickup',

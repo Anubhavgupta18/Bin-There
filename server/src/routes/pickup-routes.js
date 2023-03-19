@@ -7,7 +7,7 @@ const router = express.Router();
 
 router.post('/', authenticateUser, createPickup);
 router.patch('/update/:id', authenticateUser, updatePickup);
-router.get('/user', authenticateUser, findPickUpsByUserId )
+router.get('/user/:id', findPickUpsByUserId )
 
 
 module.exports = router;

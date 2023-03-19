@@ -8,6 +8,8 @@ const router = express.Router();
 router.post('/', authenticateUser, createPickup);
 router.patch('/update/:id', authenticateUser, updatePickup);
 router.get('/user/:id', findPickUpsByUserId )
+router.patch('/update/:pickUpId', authenticateUser, updatePickup);
+router.get('/user', authenticateUser, findPickUpsByUserId )
 
 
 module.exports = router;

@@ -14,7 +14,15 @@ const pickupSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Agent',
     },
-    status: {
+    statusByUser: {
+        type: Boolean,
+        default: false
+    },
+    statusByAgent: {
+        type: Boolean,
+        default: false
+    },
+    pickUpStatus:{
         type: String,
         enum: ['pending', 'approved', 'rejected'],
         default: 'pending'

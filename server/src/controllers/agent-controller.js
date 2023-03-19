@@ -157,10 +157,29 @@ const updateDetails = async (req, res) => {
     }
 }
 
+const getAgent = async (req, res) => {
+    try {
+        const { agentId } = req.params;
+        const agent = await Agent.findById(agentId);
+        if (!agent) {
+            return res.status(404).json({ message: 'no agent is available' });
+        }
+        agent.password = undefined;
+        return res.status(200).json(agent);
+    } catch (error) {
+        return res.status(500).json({
+            message: 'Error while getting agent details',
+            error: error
+
+        });
+    }
+};
+
 
 module.exports = {
     createAgent,
     signin,
     verifyOtp,
-    updateDetails
+    updateDetails,
+    getAgent
 }

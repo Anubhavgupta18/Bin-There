@@ -2,8 +2,7 @@ const Recycle = require('../models/recycle-model');
 
 const updatePrice = async (req, res) => {
     try {
-        const price = req.body.price;
-        const recycleReq = await Recycle.findByIdAndUpdate(req.params.id, price, { new: true });
+        const recycleReq = await Recycle.findByIdAndUpdate(req.params.id, req.body, { new: true });
         return res.status(200).json({
             message: 'price updated successfully',
             recycleReq

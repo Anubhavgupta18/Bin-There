@@ -30,7 +30,7 @@ exports.createReport = async (req, res) => {
         res.status(201).json(report);
     } catch (error) {
         console.error(error);
-        res.status(500).json({ error: 'Internal server error' });
+        res.status(500).json({ error: error });
     }
 };
 

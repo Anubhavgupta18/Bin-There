@@ -15,11 +15,9 @@ const assignAgentReportJobs = async () => {
             if (!report.agent) {
                 const user = await User.findById(report.user);
                 const agent = await Agent.findOne({
-                    address: {
-                        pincode: user.address.pincode,
-                    }
+                    address:user.address.pincode,
                 });
-
+                console.log(agent);
                 if (!agent._id) {
                     console.log("No agent found");
                 }

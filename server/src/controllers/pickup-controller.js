@@ -3,11 +3,15 @@ const Pickup = require('../models/pickup-model');
 const createPickup = async (req, res) => {
     try {
         const user = req.user._id;
-        const { timeslot, agent } = req.body;
+        const { timeslot, agent, flatNo, pincode, street, city, state, lat, lon } = req.body;
+        const address = {
+            flatNo, pincode, street, city, state, lat, lon
+        }
         const pickup = new Pickup({
             user,
             timeslot,
-            agent
+            agent,
+            address
         });
         await pickup.save();
         return res.status(201).json({ pickup });

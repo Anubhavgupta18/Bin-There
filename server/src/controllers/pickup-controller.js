@@ -131,16 +131,28 @@ const updatePickup = async (req, res) => {
 };
 
 const findPickUpsByUserId = async (req, res) => {
-    const userId = req.params.id!=null?req.params.id:req.user._id;
+    const userId = req.user!=null?req.user._id:null;
+    const agentId = req.params.agentId
 
+    
+    
     try {
+        if(agentId&&!userId){
         const pickups = await Pickup.find({ user: userId });
         if (!pickups) {
             return res.status(404).json({
                 message: 'No Pickups available'
             })
         }
-        res.status(201).json(pickups);
+        res.status(201).json(pickups);}
+        else{
+            const pickups = await Pickup.find({ agent: agentId });
+            if (!pickups) {
+                return res.status(404).json({
+                    message: 'No Pickups available'
+                })
+            }
+            res.status(201).json(pickups);}
     } catch (error) {
         console.error(error);
         res.status(500).json({ error: 'Internal server error' });

@@ -1,4 +1,6 @@
 const mongoose = require('mongoose');
+const User = require('./user-model');
+const Agent = require('./agent-model');
 
 const reportSchema = new mongoose.Schema(
   {
@@ -41,6 +43,20 @@ reportSchema.pre('save', function (next) {
   next();
 });
 
+reportSchema.post('save', async function (doc, next) {
+  const report = this;
+  const user = await User.findById(report.user);
+  const agent = await Agent.findOne({
+    address: {
+      pincode: user.address.pincode
+    }
+  });
+  if (agent) {
+    report.agent = agent._id;
+    report.save();
+  }
+  next();
+});
 
 const Report = mongoose.model('Report', reportSchema);
 

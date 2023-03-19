@@ -26,7 +26,8 @@ class LoginController extends GetxController {
             'password': passwordController.text
           }),
           headers: Constants.header);
-      print(response.body);
+      // print(response.body);
+      // Get.snackbar('Login', response.body);
       if (response.statusCode == 200) {
         var data = jsonDecode(response.body);
         user = User.fromJson(data).obs;
@@ -35,6 +36,7 @@ class LoginController extends GetxController {
       return response.statusCode;
     } catch (e) {
       debugPrint(e.toString());
+      // Get.snackbar('Login', e.toString());
     } finally {
       isLoading.value = false;
     }

@@ -114,49 +114,59 @@ class PickupService extends StatelessWidget {
               ),
             ),
             SizedBox(
-                height: 100,
+                height: 50,
                 child: Obx(
                   () => ModalProgressHUD(
                     inAsyncCall: pickupController.isLoading.value,
                     child: ListView.builder(
                         scrollDirection: Axis.horizontal,
                         shrinkWrap: true,
-                        itemCount:
-                            pickupController.timeSlots?.value.timeslots.length,
-                        itemBuilder: (context, index) {
-                          return Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 8),
-                            child: GestureDetector(
-                              onTap: () {
-                                pickupController.selectedTimeSlot.value = index;
-                              },
-                              child: Obx(
-                                () => Container(
-                                  width: 100,
-                                  child: Material(
-                                    color: pickupController
-                                                .selectedTimeSlot.value ==
-                                            index
-                                        ? Colors.green
-                                        : Colors.white,
-                                    elevation: 20,
-                                    borderRadius: BorderRadius.circular(10),
-                                    child: Padding(
-                                      padding: const EdgeInsets.all(16.0),
-                                      child: Text(
-                                        '${pickupController.timeSlots?.value.timeslots[index]}',
-                                        textAlign: TextAlign.center,
-                                        style: GoogleFonts.nunitoSans(
-                                            color: Colors.black,
-                                            fontWeight: FontWeight.w700),
+                        itemCount: pickupController
+                                .timeSlots?.value.timeslots.length ??
+                            1,
+                        itemBuilder: (context, index) => pickupController
+                                    .timeSlots?.value.timeslots.length !=
+                                null
+                            ? Padding(
+                                padding:
+                                    const EdgeInsets.symmetric(horizontal: 8),
+                                child: GestureDetector(
+                                  onTap: () {
+                                    pickupController.selectedTimeSlot.value =
+                                        index;
+                                  },
+                                  child: Obx(
+                                    () => Container(
+                                      width: 100,
+                                      child: Material(
+                                        color: pickupController
+                                                    .selectedTimeSlot.value ==
+                                                index
+                                            ? Colors.green
+                                            : Colors.white,
+                                        elevation: 20,
+                                        borderRadius: BorderRadius.circular(10),
+                                        child: Padding(
+                                          padding: const EdgeInsets.all(16.0),
+                                          child: Text(
+                                            '${pickupController.timeSlots?.value.timeslots[index]}',
+                                            textAlign: TextAlign.center,
+                                            style: GoogleFonts.nunitoSans(
+                                                color: Colors.black,
+                                                fontWeight: FontWeight.w700),
+                                          ),
+                                        ),
                                       ),
                                     ),
                                   ),
                                 ),
-                              ),
-                            ),
-                          );
-                        }),
+                              )
+                            : const Center(
+                                child: Text(
+                                  'No Slots available currently',
+                                  textAlign: TextAlign.center,
+                                ),
+                              )),
                   ),
                 )),
             const SizedBox(
@@ -231,7 +241,7 @@ class PickupService extends StatelessWidget {
                                 onPressed: () {
                                   pickupController.updateAddress();
                                 },
-                                child: Text('Submit'))
+                                child: const Text('Submit'))
                           ],
                         );
                       });
@@ -249,12 +259,12 @@ class PickupService extends StatelessWidget {
               height: 20,
             ),
             Padding(
-                padding: EdgeInsets.symmetric(horizontal: 16),
+                padding: const EdgeInsets.symmetric(horizontal: 16),
                 child: ElevatedButton(
                     onPressed: () {
                       pickupController.createPickup();
                     },
-                    child: Text('Schedule Pickup'))),
+                    child: const Text('Schedule Pickup'))),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16),
               child: Text(
@@ -271,7 +281,7 @@ class PickupService extends StatelessWidget {
                   borderRadius: BorderRadius.circular(24),
                   animationDuration: const Duration(seconds: 3),
                   child: SizedBox(
-                    height: 200,
+                    height: 100,
                     width: double.infinity,
                     child: ModalProgressHUD(
                       inAsyncCall: pickupController.isLoading.value,
@@ -279,7 +289,7 @@ class PickupService extends StatelessWidget {
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            CircleAvatar(
+                            const CircleAvatar(
                               child: Icon(Icons.person),
                             ),
                             const SizedBox(
@@ -312,7 +322,7 @@ class PickupService extends StatelessWidget {
               height: 20,
             ),
             Padding(
-              padding: EdgeInsets.symmetric(horizontal: 16),
+              padding: const EdgeInsets.symmetric(horizontal: 16),
               child: Text(
                 'Pickup Status:',
                 style: GoogleFonts.nunitoSans(
@@ -320,9 +330,9 @@ class PickupService extends StatelessWidget {
               ),
             ),
             Padding(
-              padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
               child: AnimatedContainer(
-                height: 200,
+                height: 150,
                 duration: const Duration(seconds: 3),
                 width: double.infinity,
                 child: Obx(
@@ -337,34 +347,44 @@ class PickupService extends StatelessWidget {
                             child: Material(
                               elevation: 8,
                               borderRadius: BorderRadius.circular(24),
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Text(
-                                      'Date : ${DateFormat('dd/mm/yyyy').format(pickupController.allPickups[index].createdAt as DateTime)}'),
-                                  Text(
-                                    'Time Slot : ' +
-                                        pickupController
-                                            .allPickups[index].timeslot
-                                            .toString(),
-                                  ),
-                                  Text('Status : ' +
-                                      pickupController.allPickups[index].status
-                                          .toString()
-                                          .toUpperCase()),
-                                  GestureDetector(
+                              child: Padding(
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 16.0),
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: Text(
+                                          'Date : ${DateFormat('d, MMMM yyyy').format((DateFormat('yyyy-MM-dd HH:mm:ss.SSSZ').parseUtc(pickupController.allPickups[index].createdAt.toString())))}'),
+                                    ),
+                                    Padding(
+                                      padding: const EdgeInsets.symmetric(
+                                          horizontal: 8.0),
+                                      child: Text(
+                                        'Time Slot : ${pickupController.allPickups[index].timeslot}',
+                                      ),
+                                    ),
+                                    Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: Text(
+                                          'Status : ${pickupController.allPickups[index].status.toString().toUpperCase()}'),
+                                    ),
+                                    GestureDetector(
                                       onTap: () {
                                         pickupController.updatePickupStatus();
                                       },
-                                      child: Text(
+                                      child: const Text(
                                         'Approve Pickup',
                                         style: TextStyle(color: Colors.blue),
-                                      ))
-                                ],
+                                      ),
+                                    )
+                                  ],
+                                ),
                               ),
                             ),
                           )
-                        : Center(
+                        : const Center(
                             child: Text('No Pickups Scheduled'),
                           ),
                   ),

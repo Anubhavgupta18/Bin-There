@@ -61,7 +61,7 @@ class PickupController extends GetxController {
           headers: Constants().authHeader);
       if (response.statusCode == 201) {
         // print(response.body);
-        allPickups = allPickupsFromJson(response.body).obs;
+        allPickups.value = allPickupsFromJson(response.body);
       }
     } catch (err) {
       print(err);
@@ -95,8 +95,8 @@ class PickupController extends GetxController {
           body: jsonEncode({'status': 'approved'}),
           headers: Constants().authHeader);
       if (response.statusCode == 200) {
-        Get.snackbar('Success', 'You confirmed the pickup from your house');
         await getAllPickups();
+        Get.snackbar('Success', 'You confirmed the pickup from your house');
       }
     } catch (err) {
       print(err);

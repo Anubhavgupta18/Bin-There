@@ -26,7 +26,16 @@ const pickupSchema = new mongoose.Schema({
         type: String,
         enum: ['pending', 'approved', 'rejected'],
         default: 'pending'
-    }
+    },
+    address: {
+        flatNo: String,
+        city: String,
+        state: String,
+        pincode: String,
+        street: String,
+        lat: String,
+        lon: String
+    },
 }, { timestamps: true });
 
 const Pickup = mongoose.model('Pickup', pickupSchema);

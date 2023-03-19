@@ -14,7 +14,7 @@ router.patch('/update/:id', updateDetails );
 
 router.patch('/recycle/:id', updatePrice);
 
-router.get('/:agentId', getAgent);
+//router.get('/:agentId', getAgent);
 
 
 module.exports = router;
